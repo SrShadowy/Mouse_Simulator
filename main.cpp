@@ -1,5 +1,5 @@
-#include <cstdlib>
-#define WINVER 0x0500
+//#include <cstdlib>
+//#define WINVER 0x0500
 #include <iostream>
 #include <windows.h>
 
@@ -43,7 +43,14 @@ void MiddleClick (bool cm)
  SendInput(1,&Input,sizeof(INPUT));    
  }
 }
-
+void wDown()
+{
+	mouse_event(MOUSEEVENTF_WHEEL, 0, 0, DWORD(-WHEEL_DELTA), 0);
+}
+void wUp()
+{
+	mouse_event(MOUSEEVENTF_WHEEL, 0, 0, DWORD(WHEEL_DELTA), 0);
+}
 
 int main(int argc, char *argv[])
 {
@@ -57,6 +64,7 @@ int main(int argc, char *argv[])
     std::cout << "-\tuse os direcionais A S D W para mover o cursor\t\t-\n";
     std::cout << "-\tJ para click direito K para esquerdo L para meio\t-\n";
     std::cout << "-\t+ ou - para aumentar ou diminuir a velocidade\t\t-\n";
+    std::cout << "-\t+ F para scroll down e R para scroll up           \n";
     std::cout << "-\t\t\tuse Q para Sair\t\t\t\t-\n \t\tpressione enter para continuar\t\n";
     std::cout << "------------------------------------------------------------------\n";
     std::cin.get(); 
@@ -83,6 +91,12 @@ int main(int argc, char *argv[])
     if (GetAsyncKeyState('K'))
                RighClick();
 
+   if (GetAsyncKeyState('F'))
+				wDown();
+				
+   if(GetAsyncKeyState('R')) 
+   				wUp();
+				
     if (GetAsyncKeyState('Q'))
             break;   
              
